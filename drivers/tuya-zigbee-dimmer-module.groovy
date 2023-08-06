@@ -229,9 +229,8 @@ metadata {
     "_TZ3210_pagajpog": [ numEps: 2, model: "TS110E", inClusters: "0005,0004,0006,0008,E001,0000", joinName: "Lonsonho Tuya Smart Zigbee Dimmer"],                 // https://community.hubitat.com/t/release-tuya-lonsonho-1-gang-and-2-gang-zigbee-dimmer-module-driver/60372/76?u=kkossev
     "_TZ3210_4ubylghk": [ numEps: 2, model: "TS110E", inClusters: "0004,0005,0006,0008,0300,EF00,0000", joinName: "Lonsonho Tuya Smart Zigbee Dimmer"],            // https://community.hubitat.com/t/driver-support-for-tuya-dimmer-module-model-ts110e-manufacturer-tz3210-4ubylghk/116077?u=kkossev
     "_TZ3210_ngqk6jia": [ numEps: 1, model: "TS110E", inClusters: "0003,0005,0004,0006,0008,E001,1000,0000", joinName: "Lonsonho Smart Zigbee Dimmer"],            // KK
-    "_TZ3210_3mpwqzuu": [ numEps: 2, model: "TS110E", inClusters: "0005,0004,0006,0008,E001,0000", joinName: "Tuya Smart Zigbee Dimmer"]                           // https://community.hubitat.com/t/driver-support-for-tuya-dimmer-module-model-ts110e-manufacturer-tz3210-4ubylghk/116077/26?u=kkossev
-    
-
+    "_TZ3210_3mpwqzuu": [ numEps: 2, model: "TS110E", inClusters: "0005,0004,0006,0008,E001,0000", joinName: "Tuya Smart Zigbee Dimmer"],                          // https://community.hubitat.com/t/driver-support-for-tuya-dimmer-module-model-ts110e-manufacturer-tz3210-4ubylghk/116077/26?u=kkossev
+    "_TZ3000_qyo2yzwk": [ numEps: 1, model: "TS0052", inClusters: "0003,0004,0005,0006,E000,E001,0008,0000", joinName: "Tuya Zigbee 1-Gang Dimmer module"]
 ]
 
 def getNumEps() {return config()?.numEps ?: 1}
@@ -248,7 +247,9 @@ def config() { return modelConfigs[device.getDataValue("manufacturer")] }
                 [numEps: 1, profileId:"0104", endpointId:"01", inClusters:"0000,0004,0005,0006,0008", outClusters:"0019,000A", model:"TS110F", manufacturer:"_TYZB01_qezuin6k", deviceJoinName: "Tuya Zigbee 1-Gang Dimmer module"],           // '1 gang smart dimmer switch module with neutral'
                 [numEps: 1, profileId:"0104", endpointId:"01", inClusters:"0000,0004,0005,0006,0008", outClusters:"0019,000A", model:"TS110F", manufacturer:"_TZ3000_ktuoyvt5", deviceJoinName: "Tuya Zigbee 1-Gang Dimmer module"],            // '1 gang smart        switch module without neutral'
                 [numEps: 2, profileId:"0104", endpointId:"01", inClusters:"0000,0004,0005,0006,0008", outClusters:"0019,000A", model:"TS110F", manufacturer:"_TZ3000_92chsky7", deviceJoinName: "Tuya Zigbee 2-Gang Dimmer module (no-neutral)"], // '2 gang smart dimmer switch module without neutral' - Lonsonho ???
-                [numEps: 2, profileId:"0104", endpointId:"01", inClusters:"0000,0004,0005,0003,0006,0008", outClusters:"0019,000A", model:"TS110F", manufacturer:"_TZ3000_7ysdnebc", deviceJoinName: "Tuya 2CH Zigbee dimmer module"]       
+                [numEps: 2, profileId:"0104", endpointId:"01", inClusters:"0000,0004,0005,0003,0006,0008", outClusters:"0019,000A", model:"TS110F", manufacturer:"_TZ3000_7ysdnebc", deviceJoinName: "Tuya 2CH Zigbee dimmer module"],       
+                [numEps: 1, profileId:"0104", endpointId:"01", inClusters:"0003,0004,0005,0006,E000,E001,0008,0000", outClusters:"0021", model:"TS0052", manufacturer:"_TZ3000_qyo2yzwk", deviceJoinName: "Tuya Zigbee 1-Gang Dimmer module"] // '1 gang smart dimmer switch module with neutral'
+
             ],
             deviceJoinName: "TS110F Tuya Dimmer",
             capabilities  : ["SwitchLevel": true],
@@ -376,6 +377,8 @@ def getModelGroup()        { return getDW().state.deviceProfile ?:"UNKNOWN" }
 def getDeviceProfilesMap() {deviceProfilesV2.values().description as List<String>}
 def isTS0601()             { return getDW().getModelGroup().contains("TS0601") }
 def isFanController()      { return getDW().getModelGroup().contains("TS0601_FAN") }
+def isTS
+
 def isTS110E()             { return getDW().getModelGroup().contains("TS110E_DIMMER") }
 def isGirier()             { return getDW().getModelGroup().contains("TS110E_GIRIER_DIMMER") }
 def isLonsonho()           { return getDW().getModelGroup().contains("TS110E_LONSONHO_DIMMER") }
@@ -2041,10 +2044,10 @@ def testX( var ) {
 /*
 ID	    Name	                        Data type	    Range	        Defualt value
 0xFC00	Level control max min	        uint16 -0x21    0x0000 - 0xffff	0x01ff
-0xFC02	Level control bulb type	        uint8 -0x20	    0x00–0xFF	    0x00
-0xFC03	Level control scr state	        uint8 -0x20	    0x00–0xFF	    0x01
-0xFC04	Level control current percentage uint8 -0x20	0x00–0xFF	    0x01
-0xFC05	Level control min percentage	uint8 -0x20	    0x00–0xFF	    0x01
+0xFC02	Level control bulb type	        uint8 -0x20	    0x00ï¿½0xFF	    0x00
+0xFC03	Level control scr state	        uint8 -0x20	    0x00ï¿½0xFF	    0x01
+0xFC04	Level control current percentage uint8 -0x20	0x00ï¿½0xFF	    0x01
+0xFC05	Level control min percentage	uint8 -0x20	    0x00ï¿½0xFF	    0x01
 */
 
 
